@@ -18,7 +18,8 @@
     "paths": {
       "@src": ["./"],
       "@components/*" : ["components/*"],
-      "@assets/*" : ["assets/*"]
+      "@assets/*" : ["assets/*"],
+      "@store/*" : ["stores/*"]
     },
     /* Linting */
     "strict": true,

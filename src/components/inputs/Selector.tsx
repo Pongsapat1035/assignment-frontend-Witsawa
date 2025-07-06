@@ -1,51 +1,82 @@
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import Stack from "@mui/material/Stack";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import * as React from "react";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { Stack } from "@mui/material";
+import FormHelperText from "@mui/material/FormHelperText";
+import Typography from "@mui/material/Typography";
 
-export default function SelectorInput() {
-  const [age, setAge] = React.useState("");
+import { Controller, type Control } from "react-hook-form";
 
-  const handleChange = (event: any) => {
-    setAge(event.target.value);
+type SelectorInputProps = {
+  title: string;
+  placeholder: string;
+  lists: string[];
+};
+
+export default function SelectorInput({
+  props,
+  control,
+  errorMsg,
+  name,
+}: {
+  props: SelectorInputProps;
+  control: Control<any>;
+  errorMsg?: string;
+  name: string;
+}) {
+  const selectStyle = {
+    marginTop: 2,
+    position: "relative",
+    border: 1,
+    px: 1,
+    py: "6px",
+    borderRadius: 2,
+    borderColor: "divider",
+    "& .MuiSelect-icon": {
+      color: "primary.main",
+      fontSize: 30,
+      right: 12,
+    },
   };
 
   return (
-    <FormControl fullWidth variant="standard">
-      <Stack direction="column" spacing="25px">
-        <InputLabel shrink sx={{ fontSize: 20 }}>
-          Age
-        </InputLabel>
-        <Select
-          id="demo-simple-select"
-          value={age}
-          label="Age"
-          onChange={handleChange}
-          IconComponent={KeyboardArrowDownIcon}
-          displayEmpty
-          disableUnderline
-          sx={{
-            marginTop: 2,
-            position: "relative",
-            border: 1,
-            px: 1,
-            py: "6px",
-            borderRadius: 2,
-            borderColor: "divider",
-            "& .MuiSelect-icon": {
-              color: "primary.main",
-              fontSize: 30,
-              right: 12,
-            },
-          }}>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-        </Select>
-      </Stack>
-    </FormControl>
+    <Controller
+      name={name}
+      control={control}
+      defaultValue="None"
+      render={({ field }) => (
+        <FormControl fullWidth variant="standard">
+          <Stack direction="column" spacing="25px">
+            <InputLabel shrink sx={{ fontSize: 20 }}>
+              {props.title}
+            </InputLabel>
+            <Select
+              {...field}
+              IconComponent={KeyboardArrowDownIcon}
+              disableUnderline
+              sx={selectStyle}>
+              <MenuItem value="None" disabled>
+                <Typography variant="body1" color="#B3B3B3" fontWeight="light">
+                  {props.placeholder}
+                </Typography>
+              </MenuItem>
+              {props.lists.map((item, index) => (
+                <MenuItem value={item} key={index}>
+                  <Typography
+                    variant="body1"
+                    color="primary.main"
+                    fontWeight="light">
+                    {item}
+                  </Typography>
+                </MenuItem>
+              ))}
+            </Select>
+          </Stack>
+          <FormHelperText>{errorMsg}</FormHelperText>
+        </FormControl>
+      )}
+    />
   );
 }

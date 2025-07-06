@@ -1,0 +1,102 @@
+[
+  {
+    "id": "user001",
+    "first_name": "Alice",
+    "last_name": "Smith",
+    "role": "Investor",
+    "phone_no": "0812345678",
+    "email": "alice.smith@example.com",
+    "title_name": "Ms.",
+    "birth_date": "1990-05-15"
+  },
+  {
+    "id": "user002",
+    "first_name": "Bob",
+    "last_name": "Johnson",
+    "role": "Entrepreneur",
+    "phone_no": "0823456789",
+    "email": "bob.johnson@example.com",
+    "title_name": "Mr.",
+    "birth_date": "1985-11-22"
+  },
+  {
+    "id": "user003",
+    "first_name": "Carol",
+    "last_name": "White",
+    "role": "Investor",
+    "phone_no": "0834567890",
+    "email": "carol.white@example.com",
+    "title_name": "Ms.",
+    "birth_date": "1992-02-29"
+  },
+  {
+    "id": "user004",
+    "first_name": "David",
+    "last_name": "Green",
+    "role": "Entrepreneur",
+    "phone_no": "0845678901",
+    "email": "david.green@example.com",
+    "title_name": "Mr.",
+    "birth_date": "1978-07-01"
+  },
+  {
+    "id": "user005",
+    "first_name": "Eve",
+    "last_name": "Black",
+    "role": "Investor",
+    "phone_no": "0856789012",
+    "email": "eve.black@example.com",
+    "title_name": "Ms.",
+    "birth_date": "1995-09-10"
+  },
+  {
+    "id": "user006",
+    "first_name": "Frank",
+    "last_name": "Brown",
+    "role": "Entrepreneur",
+    "phone_no": "0867890123",
+    "email": "frank.brown@example.com",
+    "title_name": "Mr.",
+    "birth_date": "1980-03-05"
+  },
+  {
+    "id": "user007",
+    "first_name": "Grace",
+    "last_name": "Lee",
+    "role": "Investor",
+    "phone_no": "0878901234",
+    "email": "grace.lee@example.com",
+    "title_name": "Ms.",
+    "birth_date": "1998-12-25"
+  },
+  {
+    "id": "user008",
+    "first_name": "Henry",
+    "last_name": "King",
+    "role": "Entrepreneur",
+    "phone_no": "0889012345",
+    "email": "henry.king@example.com",
+    "title_name": "Mr.",
+    "birth_date": "1975-06-18"
+  },
+  {
+    "id": "user009",
+    "first_name": "Ivy",
+    "last_name": "Chen",
+    "role": "Investor",
+    "phone_no": "0890123456",
+    "email": "ivy.chen@example.com",
+    "title_name": "Ms.",
+    "birth_date": "1993-01-30"
+  },
+  {
+    "id": "user010",
+    "first_name": "Jack",
+    "last_name": "Wong",
+    "role": "Entrepreneur",
+    "phone_no": "0901234567",
+    "email": "jack.wong@example.com",
+    "title_name": "Mr.",
+    "birth_date": "1988-04-12"
+  }
+]

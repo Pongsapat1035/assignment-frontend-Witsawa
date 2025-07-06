@@ -1,52 +1,52 @@
-import InputBase from "@mui/material/InputBase";
-import { alpha, styled } from "@mui/material/styles";
+import { useState } from "react";
+import type { UseFormRegisterReturn } from "react-hook-form";
+
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
-import * as React from 'react';
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
+import FormHelperText from "@mui/material/FormHelperText";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
-import LockOutlineRoundedIcon from '@mui/icons-material/LockOutlineRounded';
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+import { StyledInput } from "./CustomInputTag";
 
-const StyledInput = styled(InputBase)(({ theme }) => ({
-  "label + &": {
-    marginTop: theme.spacing(3),
-    border: "1px solid",
-    borderColor: theme.palette.divider,
-    padding: "6px 12px",
-    borderRadius: 8,
-    transition: theme.transitions.create([
-      "border-color",
-      "background-color",
-      "box-shadow",
-    ]),
-  },
-  "& .MuiInputBase-input": {
-    marginLeft: 8,
-  },
-  "&.Mui-focused": {
-    borderColor: theme.palette.primary.main,
-    boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
-  },
-}));
+interface InputTagProps {
+  title: string;
+  placeholder?: string;
+  icon?: string;
+}
 
-export default function PasswordInputTag() {
-  const [showPassword, setShowPassword] = React.useState(false);
+export default function PasswordInputTag({
+  props,
+  validate,
+  errorMsg,
+}: {
+  props: InputTagProps;
+  validate?: UseFormRegisterReturn;
+  errorMsg?: string;
+}) {
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
+  const tagName = props.title.toLocaleLowerCase();
+  const icon = props.icon ? (
+    <img src={props.icon} alt="password-icon"></img>
+  ) : null;
 
   return (
     <FormControl variant="standard" fullWidth>
-      <InputLabel shrink htmlFor="outlined-adornment-password" sx={{ fontSize: 20 }}>Password</InputLabel>
-       <StyledInput
-        placeholder="Example"
-        id="bootstrap-input"
+      <InputLabel shrink htmlFor={tagName}>
+        {props.title}
+      </InputLabel>
+      <StyledInput
+        placeholder={props.placeholder}
+        id={tagName}
         type={showPassword ? "text" : "password"}
-        startAdornment={<LockOutlineRoundedIcon />}
-         endAdornment={
+        startAdornment={icon}
+        {...validate}
+        endAdornment={
           <InputAdornment position="end">
             <IconButton
               aria-label={
@@ -54,11 +54,16 @@ export default function PasswordInputTag() {
               }
               onClick={handleClickShowPassword}
               edge="end">
-              {showPassword ? <VisibilityOffOutlinedIcon /> : <VisibilityOutlinedIcon />}
+              {showPassword ? (
+                <VisibilityOffOutlinedIcon />
+              ) : (
+                <VisibilityOutlinedIcon />
+              )}
             </IconButton>
           </InputAdornment>
         }
       />
+      <FormHelperText>{errorMsg}</FormHelperText>
     </FormControl>
   );
 }

@@ -1,15 +1,31 @@
+import { useState } from "react";
+
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
 import Popover from "@mui/material/Popover";
-import { useState } from "react";
 import Button from "@mui/material/Button";
-import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import Stack from "@mui/material/Stack";
+import ConfirmModal from "@components/modals/ConfirmModal";
+import UserFormModal from "@components/UserFormModal";
 
-export default function UserList() {
+import BinIcon from "@assets/icons/bin.png";
+import EditIcon from "@assets/icons/edit.png";
+
+import type { UserData } from "types";
+import { useModal } from "../ModalContext";
+import { useUserStore } from "@store/userStore";
+import SuccessModal from "@components/modals/SuccessModal";
+import { Divider } from "@mui/material";
+
+export default function UserList({
+  data,
+  index,
+}: {
+  data: UserData;
+  index: number;
+}) {
   const style = {
     pl: 2,
     borderRight: 1,
@@ -17,51 +33,97 @@ export default function UserList() {
     alignItems: "center",
   };
 
-  const [anchorEl, setAnchorEl] = useState(null);
+  const textStyle = { fontSize: { xs: 14, lg: 16 }, fontWeight: "light" };
+  return (
+    <>
+      <Grid container size={1} maxWidth={80} sx={style}>
+        <Typography variant="body1" sx={textStyle}>
+          {index + 1}
+        </Typography>
+      </Grid>
+      <Grid container size={3} minWidth={150} sx={style}>
+        <Typography variant="body1" sx={textStyle}>
+          {data.titleName} {data.firstname} {data.surname}
+        </Typography>
+      </Grid>
+      <Grid container size={2} minWidth={120} sx={style}>
+        <Typography variant="body1" sx={textStyle}>
+          {data.role}
+        </Typography>
+      </Grid>
+      <Grid container size={2} minWidth={105} sx={style}>
+        <Typography variant="body1" sx={textStyle}>
+          {data.phone}
+        </Typography>
+      </Grid>
+      <Grid
+        container
+        size={"grow"}
+        sx={{
+          pl: 2,
+          borderRight: 1,
+          borderColor: { xs: "transparent", lg: "divider" },
+          alignItems: "center",
+        }}>
+        <Typography variant="body1" sx={textStyle}>
+          {data.email}
+        </Typography>
+      </Grid>
+      <Menu userId={data.id}></Menu>
+    </>
+  );
+}
 
-  const handleClick = (event: any) => {
+const Menu = ({ userId }: { userId: string }) => {
+  const { openModal } = useModal();
+  const deleteUser = useUserStore((state) => state.deleteUser);
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const isOpen = Boolean(anchorEl);
+
+  const handleEditUser = () => {
+    openModal(<UserFormModal isEdit={true} userId={userId}></UserFormModal>);
     setAnchorEl(null);
   };
 
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
+  const confirmDelete = () => {
+    openModal(<SuccessModal mode="delete"></SuccessModal>);
+    deleteUser(userId);
+  };
+
+  const handleDeleteUser = () => {
+    openModal(
+      <ConfirmModal
+        props={{
+          mode: "delete",
+          action: confirmDelete,
+        }}></ConfirmModal>
+    );
+    setAnchorEl(null);
+  };
 
   return (
     <>
-      <Grid container size={1} sx={style}>
-        <Typography variant="body1">1</Typography>
-      </Grid>
-      <Grid container size={4} sx={style}>
-        <Typography variant="body1">Ms. Ornurai Mahaseri</Typography>
-      </Grid>
-      <Grid container size={2} sx={style}>
-        <Typography variant="body1">Entrepreneur</Typography>
-      </Grid>
-      <Grid container size={2} sx={style}>
-        <Typography variant="body1">098-325-4557</Typography>
-      </Grid>
-      <Grid container size={2} sx={style}>
-        <Typography variant="body1">example@mail.com</Typography>
-      </Grid>
       <Grid
         container
         justifyContent="center"
         alignItems="center"
         size={1}
-        pl={2}>
+        pl={2}
+        maxWidth={80}>
         <IconButton sx={{ p: "4px" }} onClick={handleClick}>
-          <MoreHorizRoundedIcon />
+          <MoreHorizRoundedIcon sx={{ color: "#5D59EB" }} />
         </IconButton>
       </Grid>
       <Popover
-        id={id}
-        open={open}
+        id="menu-propover"
+        open={isOpen}
         anchorEl={anchorEl}
-        onClose={handleClose}
+        onClose={() => setAnchorEl(null)}
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "center",
@@ -69,20 +131,33 @@ export default function UserList() {
         transformOrigin={{
           vertical: "top",
           horizontal: "right",
+        }}
+        slotProps={{
+          paper: {
+            sx: {
+              boxShadow: "none",
+              borderRadius: 3,
+              border: "1px solid #B3B3B3",
+            },
+          },
         }}>
-        <Stack direction="column">
+        <Stack direction="column" sx={{ minWidth: 200 }}>
           <Button
             variant="dropdownMenu"
-            startIcon={<BorderColorOutlinedIcon />}>
+            startIcon={<img src={EditIcon} alt="edit-icon" />}
+            onClick={handleEditUser}>
             Edit
           </Button>
+          <Divider></Divider>
           <Button
             variant="dropdownMenu"
-            startIcon={<DeleteOutlineOutlinedIcon />}>
+            startIcon={<img src={BinIcon} alt="bin-icon" />}
+            onClick={handleDeleteUser}
+            sx={{ color: "error.main" }}>
             Delete
           </Button>
         </Stack>
       </Popover>
     </>
   );
-}
+};

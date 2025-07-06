@@ -1,9 +1,6 @@
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import type { ReactNode } from "react";
-import CreateUserForm from "./CreateUserForm";
-import ConfirmModal from "./modals/ConfirmModal";
-
 
 type InputProps = {
   isOpen: boolean;
@@ -12,28 +9,24 @@ type InputProps = {
 };
 
 export default function BaseModal({ props }: { props: InputProps }) {
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    borderRadius: { xs: 0, sm: 8 },
+    width: { xs: '100%',sm: 2/3, lg:1 / 3},
+    height: { xs: "100%", sm: 'auto' },
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    py: 4,
+    px: { xs: 4, sm: 6 },
+  };
+
   return (
     <div>
-      <Modal
-        open={props.isOpen}
-        onClose={() => props.onClose()}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description">
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            borderRadius: 8,
-            width: 1/3,
-            bgcolor: "background.paper",
-            boxShadow: 24,
-            p: 6,
-          }}>
-          {/* {props.element} */}
-          <ConfirmModal></ConfirmModal>
-        </Box>
+      <Modal open={props.isOpen} onClose={() => props.onClose()}>
+        <Box sx={style}>{props.element}</Box>
       </Modal>
     </div>
   );

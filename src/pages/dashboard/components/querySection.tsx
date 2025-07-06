@@ -1,48 +1,76 @@
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
+import { useState } from "react";
+
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
-import { Grid, TextField, Button } from "@mui/material";
 import ControlPointRoundedIcon from "@mui/icons-material/ControlPointRounded";
-import { useModal } from "../ModalContext";
 import InputAdornment from "@mui/material/InputAdornment";
-import DeleteModal from "../../../components/modals/ConfirmModal";
+import CreateUserFormModal from "@components/UserFormModal";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+
+import { type SelectChangeEvent } from "@mui/material/Select";
+import { useUserStore } from "@store/userStore";
+import { useModal } from "../ModalContext";
 
 export default function QuerySection() {
   const { openModal } = useModal();
+  const [role, setRole] = useState("None");
+  const [searchText, setSearchText] = useState("");
+  const { updateRole, updateSearchText, loadUsers } = useUserStore(
+    (state) => state
+  );
 
-  const handleChange = () => {};
+  const columnStyle = { display: "flex", alignItems: "center" };
+
+  const handleChange = (e: SelectChangeEvent) => {
+    const { value } = e.target;
+    setRole(value);
+    updateRole(value);
+    loadUsers();
+  };
+
+  const handleSearch = () => {
+    updateSearchText(searchText);
+    loadUsers();
+  };
+
+  const handleAddUser = () => {
+    openModal(<CreateUserFormModal isEdit={false} />);
+  };
 
   return (
     <Grid container direction="row" spacing={2}>
-      <Grid size={3}>
-        <Box sx={{ minWidth: 120 }}>
-          <FormControl fullWidth  size="small">
-            <Select
-              value={10}
-              onChange={handleChange}
-              displayEmpty
-              inputProps={{ "aria-label": "Without label" }}
-              sx={{ borderRadius: 20 }}>
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
+      <Grid size={{ xs: 12, md: 5, lg: 3 }} sx={columnStyle}>
+        <FormControl fullWidth size="small">
+          <Select
+            value={role}
+            onChange={handleChange}
+            displayEmpty
+            sx={{ borderRadius: 20 }}>
+            <MenuItem value="None">
+              <Typography
+                variant="body1"
+                sx={{ color: "#B3B3B3", fontWeight: "light" }}>
+                Investor/Entrepreneur
+              </Typography>
+            </MenuItem>
+            <MenuItem value="Entrepreneur">Entrepreneur</MenuItem>
+            <MenuItem value="Investor">Investor</MenuItem>
+          </Select>
+        </FormControl>
       </Grid>
-      <Grid size={5}>
+      <Grid size={{ xs: 12, md: 7, lg: 5 }} sx={columnStyle}>
         <TextField
           variant="outlined"
           fullWidth
           placeholder="Search"
           size="small"
+          onChange={(e) => setSearchText(e.target.value)}
           slotProps={{
             input: {
               startAdornment: (
@@ -52,20 +80,26 @@ export default function QuerySection() {
               ),
             },
           }}
-          sx={{ "& .MuiInputBase-root": { borderRadius: 20 } }}></TextField>
+          sx={{
+            "& .MuiInputBase-root": { borderRadius: 20, color: "primary.main" },
+          }}></TextField>
       </Grid>
-      <Grid size={2}>
-        <Button variant="contained" fullWidth>
-       
+      <Grid size={{ xs: 6, md: 4, lg: 2 }} sx={columnStyle}>
+        <Button
+          variant="containedGradient"
+          fullWidth
+          sx={{ fontWeight: "light" }}
+          onClick={handleSearch}>
           Search
         </Button>
       </Grid>
-      <Grid size={2}>
+      <Grid size={{ xs: 6, md: 4, lg: 2 }} sx={columnStyle}>
         <Button
-          variant="contained"
+          variant="containedGradient"
           startIcon={<ControlPointRoundedIcon />}
-          onClick={() => openModal(<DeleteModal />)}
-          fullWidth>
+          onClick={handleAddUser}
+          fullWidth
+          sx={{ fontWeight: "medium" }}>
           Add User
         </Button>
       </Grid>
