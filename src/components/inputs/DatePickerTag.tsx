@@ -18,15 +18,10 @@ interface ChildFormProps {
 }
 
 export default function DatePickerTag({ control, errorMsg }: ChildFormProps) {
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
-  const handleClick = (event: any) => {
-    setAnchorEl(event.target);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);
+  const handleClose = () => setAnchorEl(null)
 
   const open = Boolean(anchorEl);
   const id = open ? "date-popover" : undefined;

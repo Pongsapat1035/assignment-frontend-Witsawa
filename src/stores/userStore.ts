@@ -66,7 +66,7 @@ export const useUserStore = create<UserStoreState & UserStoreAction>((set, get) 
             }
 
             if (get().roleFilter !== "None") {
-                queryUser = convertUser.filter(user => user.role === get().roleFilter)
+                queryUser = queryUser.filter(user => user.role === get().roleFilter)
             }
 
             set({

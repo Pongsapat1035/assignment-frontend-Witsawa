@@ -21,9 +21,7 @@ const columnStyle = { display: "flex", alignItems: "center" };
 
 export default function QuerySection() {
   const { openModal } = useModal();
-  const { updateRole, updateSearchText, loadUsers } = useUserStore(
-    (state) => state
-  );
+  const { updateRole, updateSearchText, loadUsers } = useUserStore((state) => state);
 
   const [role, setRole] = useState("None");
   const [searchText, setSearchText] = useState("");
@@ -46,7 +44,7 @@ export default function QuerySection() {
   const options = ["Investor", "Entrepreneur"];
 
   const selectLists = options.map((el) => (
-    <MenuItem value="Entrepreneur">
+    <MenuItem value={el}>
       <Typography
         variant="body1"
         sx={{ color: "primary.main", fontWeight: "light" }}>

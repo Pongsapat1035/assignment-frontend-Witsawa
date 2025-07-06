@@ -31,9 +31,7 @@ export default function PasswordInputTag({
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const tagName = props.title.toLocaleLowerCase();
-  const icon = props.icon ? (
-    <img src={props.icon} alt="password-icon"></img>
-  ) : null;
+  const icon = props.icon ? (<img src={props.icon} alt="password-icon"></img>) : null;
 
   return (
     <FormControl variant="standard" fullWidth>

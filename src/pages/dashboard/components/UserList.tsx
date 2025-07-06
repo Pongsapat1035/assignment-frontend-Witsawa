@@ -17,6 +17,7 @@ import BinIcon from "@assets/icons/bin.png";
 import EditIcon from "@assets/icons/edit.png";
 
 import type { UserData } from "types";
+import { convertPhoneFormat } from "../../../utils/format";
 
 export default function UserList({
   data,
@@ -53,7 +54,7 @@ export default function UserList({
       </Grid>
       <Grid container size={2} minWidth={105} sx={style}>
         <Typography variant="body1" sx={textStyle}>
-          {data.phone}
+          {convertPhoneFormat(data.phone)}
         </Typography>
       </Grid>
       <Grid
@@ -77,13 +78,11 @@ export default function UserList({
 const Menu = ({ userId }: { userId: string }) => {
   const { openModal } = useModal();
   const deleteUser = useUserStore((state) => state.deleteUser);
+
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
   const isOpen = Boolean(anchorEl);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);
 
   const handleEditUser = () => {
     openModal(<UserFormModal isEdit={true} userId={userId}></UserFormModal>);

@@ -23,9 +23,7 @@ export default function InputTag({
 }) {
   const lowerTitle = props.title.toLocaleLowerCase();
 
-  const icon = props.icon ? (
-    <img src={props.icon} alt={`logo-${lowerTitle}`}></img>
-  ) : null;
+  const icon = props.icon ? (<img src={props.icon} alt={`logo-${lowerTitle}`}></img>) : null;
 
   return (
     <FormControl variant="standard">

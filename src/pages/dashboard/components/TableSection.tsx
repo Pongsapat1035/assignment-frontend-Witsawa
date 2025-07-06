@@ -74,7 +74,7 @@ export default function TableSection() {
         </Grid>
       ))
     ) : (
-      <Grid container justifyContent="center" alignItems="center" py={4}>
+      <Grid container justifyContent="center" alignItems="center"  py={4} sx={{ width: '100%'}}>
         <Typography variant="body1">Not found user</Typography>
       </Grid>
     );

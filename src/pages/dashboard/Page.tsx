@@ -24,8 +24,7 @@ export default function DashboardPage() {
       container
       direction="column"
       spacing={2}
-      p={{ xs: 2, sm: 3, md: 5 }}
-      height="100vh">
+      sx={{ height: "100vh", p: { xs: 2, sm: 3, md: 5 } }}>
       <Grid
         container
         direction="row"

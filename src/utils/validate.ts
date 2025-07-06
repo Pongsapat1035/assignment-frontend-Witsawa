@@ -15,7 +15,7 @@ export const getCreateFormValidate = (register: UseFormRegister<UserForm>, passw
             value instanceof Date && !isNaN(value.getTime()) || "Incorrect date",
     }),
     phone: register("phone", {
-        pattern: { value: /^\+?\d+$/, message: "Incorrect phone number" },
+        pattern: { value: /^\d{10}$/, message: "Incorrect phone number" },
     }),
     email: register("email", {
         required: "Email is required",
