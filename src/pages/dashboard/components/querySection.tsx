@@ -17,15 +17,16 @@ import { type SelectChangeEvent } from "@mui/material/Select";
 import { useUserStore } from "@store/userStore";
 import { useModal } from "../ModalContext";
 
+const columnStyle = { display: "flex", alignItems: "center" };
+
 export default function QuerySection() {
   const { openModal } = useModal();
-  const [role, setRole] = useState("None");
-  const [searchText, setSearchText] = useState("");
   const { updateRole, updateSearchText, loadUsers } = useUserStore(
     (state) => state
   );
 
-  const columnStyle = { display: "flex", alignItems: "center" };
+  const [role, setRole] = useState("None");
+  const [searchText, setSearchText] = useState("");
 
   const handleChange = (e: SelectChangeEvent) => {
     const { value } = e.target;
@@ -42,6 +43,17 @@ export default function QuerySection() {
   const handleAddUser = () => {
     openModal(<CreateUserFormModal isEdit={false} />);
   };
+  const options = ["Investor", "Entrepreneur"];
+
+  const selectLists = options.map((el) => (
+    <MenuItem value="Entrepreneur">
+      <Typography
+        variant="body1"
+        sx={{ color: "primary.main", fontWeight: "light" }}>
+        {el}
+      </Typography>
+    </MenuItem>
+  ));
 
   return (
     <Grid container direction="row" spacing={2}>
@@ -55,12 +67,11 @@ export default function QuerySection() {
             <MenuItem value="None">
               <Typography
                 variant="body1"
-                sx={{ color: "#B3B3B3", fontWeight: "light" }}>
+                sx={{ color: "text.disabled", fontWeight: "light" }}>
                 Investor/Entrepreneur
               </Typography>
             </MenuItem>
-            <MenuItem value="Entrepreneur">Entrepreneur</MenuItem>
-            <MenuItem value="Investor">Investor</MenuItem>
+            {selectLists}
           </Select>
         </FormControl>
       </Grid>

@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useUserStore } from "@store/userStore";
+import { useModal } from "../ModalContext";
 
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -9,15 +11,12 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import ConfirmModal from "@components/modals/ConfirmModal";
 import UserFormModal from "@components/UserFormModal";
-
+import Divider from "@mui/material/Divider";
+import SuccessModal from "@components/modals/SuccessModal";
 import BinIcon from "@assets/icons/bin.png";
 import EditIcon from "@assets/icons/edit.png";
 
 import type { UserData } from "types";
-import { useModal } from "../ModalContext";
-import { useUserStore } from "@store/userStore";
-import SuccessModal from "@components/modals/SuccessModal";
-import { Divider } from "@mui/material";
 
 export default function UserList({
   data,
@@ -34,6 +33,7 @@ export default function UserList({
   };
 
   const textStyle = { fontSize: { xs: 14, lg: 16 }, fontWeight: "light" };
+
   return (
     <>
       <Grid container size={1} maxWidth={80} sx={style}>
@@ -106,15 +106,11 @@ const Menu = ({ userId }: { userId: string }) => {
     setAnchorEl(null);
   };
 
+  const buttonContainerStyle = { maxWidth: 80, pl: 2, alignItems:"center", justifyContent:'center' }
+
   return (
     <>
-      <Grid
-        container
-        justifyContent="center"
-        alignItems="center"
-        size={1}
-        pl={2}
-        maxWidth={80}>
+      <Grid container size={1} sx={buttonContainerStyle}>
         <IconButton sx={{ p: "4px" }} onClick={handleClick}>
           <MoreHorizRoundedIcon sx={{ color: "#5D59EB" }} />
         </IconButton>

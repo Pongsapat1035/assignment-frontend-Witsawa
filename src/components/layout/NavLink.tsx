@@ -15,6 +15,8 @@ export default function NavLink({ props }: { props: InputProps }) {
   const navigate = useNavigate();
   const logout = useAuthStore((state) => state.userLogout);
 
+  const isActive = props.to.includes("dashboard");
+
   const handleClick = () => {
     props.title === "Logout" ? logout() : null;
     navigate(props.to);
@@ -28,11 +30,15 @@ export default function NavLink({ props }: { props: InputProps }) {
     borderTopLeftRadius: 120,
     borderBottomLeftRadius: 120,
     cursor: "pointer",
-    color: "white",
     transition: "all",
     transitionDuration: "1s",
-    background: "rgba(255, 255, 255, 0)",
-
+    color: isActive ? "primary.main" : "white",
+    background: isActive
+      ? "linear-gradient(90deg,rgba(255, 255, 255, 1) 16%, rgba(255, 255, 255, .1) 100%)"
+      : "rgba(255, 255, 255, 0)",
+    "& p": {
+      color: isActive ? "primary.main" : "white",
+    },
     "&:hover": {
       background:
         "linear-gradient(90deg,rgba(255, 255, 255, 1) 16%, rgba(255, 255, 255, .1) 100%)",

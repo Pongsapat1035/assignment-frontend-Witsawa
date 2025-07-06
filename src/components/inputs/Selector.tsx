@@ -41,6 +41,14 @@ export default function SelectorInput({
     },
   };
 
+  const menuLists = props.lists.map((item, index) => (
+    <MenuItem value={item} key={index}>
+      <Typography variant="body1" color="primary.main" fontWeight="light">
+        {item}
+      </Typography>
+    </MenuItem>
+  ));
+
   return (
     <Controller
       name={name}
@@ -58,20 +66,11 @@ export default function SelectorInput({
               disableUnderline
               sx={selectStyle}>
               <MenuItem value="None" disabled>
-                <Typography variant="body1" color="#B3B3B3" fontWeight="light">
+                <Typography variant="body1" color="text.disabled" fontWeight="light">
                   {props.placeholder}
                 </Typography>
               </MenuItem>
-              {props.lists.map((item, index) => (
-                <MenuItem value={item} key={index}>
-                  <Typography
-                    variant="body1"
-                    color="primary.main"
-                    fontWeight="light">
-                    {item}
-                  </Typography>
-                </MenuItem>
-              ))}
+              {menuLists}
             </Select>
           </Stack>
           <FormHelperText>{errorMsg}</FormHelperText>

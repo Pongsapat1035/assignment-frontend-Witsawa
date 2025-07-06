@@ -24,6 +24,13 @@ export default function AuthPage() {
     borderBottomLeftRadius: { xs: 0, md: 5 },
   };
 
+  const imageContainerStyle = {
+    order: { xs: 1, md: 2 },
+    justifyContent: "center",
+    alignItems: "center",
+    height: { xs: 200, md: "auto" },
+  };
+
   return (
     <Grid
       container
@@ -31,20 +38,13 @@ export default function AuthPage() {
       alignItems="center"
       height="100vh"
       sx={{
-        background:
-          "linear-gradient(to top right, #ffffff 0%, #dee3ff 100%)",
+        background: "linear-gradient(to top right, #ffffff 0%, #dee3ff 100%)",
       }}>
       <Grid container sx={containerStyle}>
         <Grid container size={{ xs: 12, md: 6 }} sx={authContainerStyle}>
           <AuthForm></AuthForm>
         </Grid>
-        <Grid
-          size={{ xs: 12, md: 6 }}
-          order={{ xs: 1, md: 2 }}
-          container
-          justifyContent="center"
-          alignItems="center"
-          height={{ xs: 200, md: "auto" }}>
+        <Grid size={{ xs: 12, md: 6 }} container sx={imageContainerStyle}>
           <img src={Logo} alt="Logo" />
         </Grid>
       </Grid>

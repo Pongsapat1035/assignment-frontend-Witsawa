@@ -1,19 +1,21 @@
 import { Outlet } from "react-router";
-import NavLink from "./NavLink";
-
-import Logo from "../assets/Logo.png";
-import { ModalProvider } from "../pages/dashboard/ModalContext";
-import Grid from "@mui/material/Grid";
+import { useEffect } from "react";
 
 import { useUserStore } from "@store/userStore";
-import { useEffect } from "react";
-import MobileNav from "./MobileNav";
 
+import Logo from "@assets/Logo.png";
+import MobileNav from "./MobileNav";
+import NavLink from "./NavLink";
+
+import Grid from "@mui/material/Grid";
 import ExitToAppRoundedIcon from "@mui/icons-material/ExitToAppRounded";
 import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 import ContactEmergencyRoundedIcon from "@mui/icons-material/ContactEmergencyRounded";
 import BusinessCenterRoundedIcon from "@mui/icons-material/BusinessCenterRounded";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
+
+import { ModalProvider } from "../../pages/dashboard/ModalContext";
+
 
 const navLists = [
   {
@@ -23,17 +25,17 @@ const navLists = [
   },
   {
     title: "Company",
-    to: "/dashboard",
+    to: "",
     icon: <BusinessCenterRoundedIcon />,
   },
   {
     title: "Role Permission",
-    to: "/dashboard",
+    to: "",
     icon: <ContactEmergencyRoundedIcon />,
   },
   {
     title: "Setting",
-    to: "/dashboard",
+    to: "",
     icon: <SettingsRoundedIcon />,
   },
 ];
@@ -90,7 +92,7 @@ export default function Layout() {
             </Grid>
           </Grid>
         </Grid>
-        <Grid size={{ md: 12, lg: 9, xl: 10 }} sx={{ overflow: "scroll" }}>
+        <Grid size={{ md: 12, lg: 9, xl: 10 }} >
           <Outlet></Outlet>
           <MobileNav></MobileNav>
         </Grid>

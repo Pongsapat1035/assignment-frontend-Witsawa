@@ -1,14 +1,17 @@
 import { create } from 'zustand'
-import rawUserData from '../mock/mockUsers.json'
-import type { UserData, UserForm, UserRole } from 'types'
+import type { UserData, UserForm } from 'types'
 import { v4 as uuidv4 } from 'uuid';
 
+import rawUserData from '../mock/mockUsers.json'
 
-type UserStore = {
+type UserStoreState = {
     UserLists: UserData[]
     isLoading: boolean
     searchText: string,
     roleFilter: string,
+}
+
+type UserStoreAction = {
     loadDefaultUsers: () => void
     loadUsers: () => void
     createUser: (userData: UserForm) => void
@@ -19,8 +22,7 @@ type UserStore = {
     updateRole: (role: string) => void
 }
 
-
-export const useUserStore = create<UserStore>((set, get) => ({
+export const useUserStore = create<UserStoreState & UserStoreAction>((set, get) => ({
     UserLists: [],
     isLoading: false,
     searchText: '',
@@ -54,8 +56,8 @@ export const useUserStore = create<UserStore>((set, get) => ({
                 get().loadDefaultUsers()
                 return
             }
-            let queryUser: UserData[] = convertUser
 
+            let queryUser: UserData[] = convertUser
             if (get().searchText !== "") {
                 queryUser = convertUser.filter(user => {
                     const fullName = user.firstname + " " + user.surname

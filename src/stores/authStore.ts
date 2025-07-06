@@ -1,8 +1,8 @@
 import { create } from 'zustand'
-import type { LoginForm } from 'types'
-
-import { mockAuthUser } from '../mock/mockAuthUser'
 import { redirect } from 'react-router'
+
+import type { LoginForm } from 'types'
+import { mockAuthUser } from '../mock/mockAuthUser'
 
 type UserInfo = {
     email: string
@@ -35,14 +35,12 @@ export const useAuthStore = create<AuthState & AuthAction>((set) => ({
 
         const auth = { email: user.email, name: user.name }
         localStorage.setItem("user", JSON.stringify(auth))
-
     },
     loadProfile: () => {
         const user = localStorage.getItem("user")
         const convertUser = user ? (JSON.parse(user)) : null;
-        if (!convertUser) {
-            redirect("/")
-        }
+        if (!convertUser)  redirect("/")
+        
         const { email, name } = convertUser
 
         set(() => ({ userInfo: { email, name } }))
@@ -50,6 +48,5 @@ export const useAuthStore = create<AuthState & AuthAction>((set) => ({
     userLogout: () => {
         localStorage.removeItem("user")
         localStorage.removeItem("userLists")
-
     },
 }))

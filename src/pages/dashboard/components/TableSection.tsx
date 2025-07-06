@@ -1,24 +1,22 @@
+import { useUserStore } from "@store/userStore";
+
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import UserList from "./UserList";
 
-import { useUserStore } from "@store/userStore";
-
 const TableHead = () => {
   const columnStyle = { fontWeight: "medium", color: "primary.main" };
+  const containerStyle = {
+    direction: "row",
+    backgroundColor: "secondary.main",
+    borderTopLeftRadius: { xs: 0, md: 20 },
+    borderTopRightRadius: { xs: 0, md: 20 },
+    py: 2,
+    minWidth: "780px",
+  };
+
   return (
-    <Grid
-      container
-      size={12}
-      sx={{
-        direction: "row",
-        backgroundColor: "secondary.main",
-        borderTopLeftRadius: { xs: 0, md: 20 },
-        borderTopRightRadius: { xs: 0, md: 20 },
-        py: 2,
-        minWidth: "780px",
-        overflow: "scroll",
-      }}>
+    <Grid container size={12} sx={containerStyle}>
       <Grid size={1} maxWidth={80} pl={2}>
         <Typography variant="body1" sx={columnStyle}>
           No.
@@ -56,7 +54,16 @@ export default function TableSection() {
     borderBottom: 1,
     borderColor: "divider",
     minWidth: "780px",
-    overflow: "scroll",
+  };
+
+  const userListContainerStyle = {
+    direction: "column",
+    height: "auto",
+    bgcolor: "white",
+    borderBottomLeftRadius: { xs: 0, md: 20 },
+    borderBottomRightRadius: { xs: 0, md: 20 },
+    minWidth: "780px",
+    overflowY: "auto",
   };
 
   const userLists =
@@ -82,18 +89,7 @@ export default function TableSection() {
       }}>
       <Grid direction="column">
         <TableHead></TableHead>
-        <Grid
-          container
-          direction="column"
-          size="grow"
-          bgcolor="white"
-          height="auto"
-          sx={{
-            borderBottomLeftRadius: { xs: 0, md: 20 },
-            borderBottomRightRadius: { xs: 0, md: 20 },
-            minWidth: "780px",
-            overflowY: "scroll",
-          }}>
+        <Grid container size="grow" sx={userListContainerStyle}>
           {userLists}
         </Grid>
       </Grid>
